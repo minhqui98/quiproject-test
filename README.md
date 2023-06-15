@@ -1,4 +1,4 @@
-# MERN AMAZONA
+<!-- # MERN AMAZONA
 
 ![amazona](/frontend/public/images/amazona.jpg)
 
@@ -314,4 +314,4 @@ $ npm start
     3. remove package-lock.json
     4. npm install
     5. replace render with createRoot
-    6. fix LinkContainer error
+    6. fix LinkContainer error -->
