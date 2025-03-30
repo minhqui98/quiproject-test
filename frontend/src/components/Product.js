@@ -31,20 +31,31 @@ function Product(props) {
   return (
     <Card>
       <Link to={`/product/${product.slug}`}>
-        <img src={product.image} className="card-img-top" alt={product.name} />
+        <img
+          src={product.image}
+          className="card-img-top"
+          alt={product.name}
+          height={200}
+          style={{ objectFit: 'cover' }}
+        />
       </Link>
       <Card.Body>
-        <Link to={`/product/${product.slug}`}>
+        <Link style={{ color: 'black', textDecoration: 'none' }} to={`/product/${product.slug}`}>
           <Card.Title>{product.name}</Card.Title>
         </Link>
-        <Rating rating={product.rating} numReviews={product.numReviews} />
-        <Card.Text>${product.price}</Card.Text>
+        {/* <Rating rating={product.rating} numReviews={product.numReviews} /> */}
+        <Card.Text style={{ color: '#dd2f2c', fontWeight: 'bold' }}>Liên hệ sđt/zalo: 0963102599</Card.Text>
         {product.countInStock === 0 ? (
           <Button variant="light" disabled>
             Out of stock
           </Button>
         ) : (
-          <Button onClick={() => addToCartHandler(product)}>Add to cart</Button>
+          <Link to={`/product/${product.slug}`}>
+            {/* <Card.Title>{product.name}</Card.Title> */}
+            <Button style={{ color: '#2a83e9', backgroundColor: 'rgba(241, 248, 254, 1)', fontWeight: 'bold' }}>
+              Xem chi tiết
+            </Button>
+          </Link>
         )}
       </Card.Body>
     </Card>

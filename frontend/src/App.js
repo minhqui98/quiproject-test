@@ -77,82 +77,82 @@ function App() {
       >
         <ToastContainer position="bottom-center" limit={1} />
         <header>
-          <Navbar bg="dark" variant="dark" expand="lg">
+          <Navbar bg="light" variant="light" expand="lg">
             <Container>
-              <Button
-                variant="dark"
-                onClick={() => setSidebarIsOpen(!sidebarIsOpen)}
-              >
+              {/* <Button variant="dark" onClick={() => setSidebarIsOpen(!sidebarIsOpen)}>
                 <i className="fas fa-bars"></i>
-              </Button>
+              </Button> */}
 
-              <LinkContainer to="/">
-                <Navbar.Brand>Quí Store</Navbar.Brand>
+              <LinkContainer to="/" style={{ cursor: 'pointer' }}>
+                {/* <Navbar.Brand>Quí Store</Navbar.Brand> */}
+                <img src="/images/nike.png" width={50} height={50} />
               </LinkContainer>
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              {/* <Navbar.Toggle aria-controls="basic-navbar-nav" /> */}
               <Navbar.Collapse id="basic-navbar-nav">
-                <SearchBox />
-                <Nav className="me-auto  w-100  justify-content-end">
-                <NavDropdown title="Categories" id="basic-nav-dropdown">
-                {categories.map((category,index) => (
-              
-                <LinkContainer
-                  to={{ pathname: '/search', search: `category=${category}` }}
-                >
-                  <NavDropdown.Item>{category}</NavDropdown.Item>
-                </LinkContainer>
-               
-            ))}
-                      {/* <LinkContainer to="/profile">
+                <Nav className="me-auto  w-100  justify-content-end align-items-center">
+                  {/* <SearchBox /> */}
+                  {/* <i class="fa-solid fa-sliders fa-beat"></i> */}
+                  {/* <NavDropdown title="Danh mục" id="basic-nav-dropdown">
+                    {categories.map((category, index) => (
+                      <LinkContainer to={{ pathname: '/search', search: `category=${category}` }}>
+                        <NavDropdown.Item>{category}</NavDropdown.Item>
+                      </LinkContainer>
+                    ))}
+                    <LinkContainer to="/profile">
                         <NavDropdown.Item>User Profile</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/orderhistory">
                         <NavDropdown.Item>Order History</NavDropdown.Item>
-                      </LinkContainer> */}
-                    </NavDropdown>
-                  <Link to="/cart" className="nav-link">
-                  <i class="fas fa-shopping-cart"></i>
+                      </LinkContainer>
+                  </NavDropdown> */}
+                  {/* &nbsp;&nbsp; */}
+                  {userInfo ? (
+                    <>
+                      <div className="d-flex align-items-center">
+                        <i class="fa-solid fa-user fa-beat"></i>
+                        <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
+                          <LinkContainer to="/profile">
+                            <NavDropdown.Item>User Profile</NavDropdown.Item>
+                          </LinkContainer>
+                          <LinkContainer to="/orderhistory">
+                            <NavDropdown.Item>Order History</NavDropdown.Item>
+                          </LinkContainer>
+                          <NavDropdown.Divider />
+                          <Link className="dropdown-item" to="#signout" onClick={signoutHandler}>
+                            Sign Out
+                          </Link>
+                        </NavDropdown>
+                      </div>
+                    </>
+                  ) : (
+                    // <Link className="nav-link" to="/signin">
+                    //   Đăng nhập
+                    // </Link>
+                    <></>
+                  )}
+                  {/* <Link to="/cart" className="nav-link">
+                    <i class="fa-solid fa-cart-shopping fa-beat"></i>
+                    &nbsp;
+                    <span>Giỏ hàng</span>
                     {cart.cartItems.length > 0 && (
                       <Badge pill bg="danger">
                         {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
                       </Badge>
                     )}
-                  </Link>
-                  {userInfo ? (
-                    <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                      <LinkContainer to="/profile">
-                        <NavDropdown.Item>User Profile</NavDropdown.Item>
-                      </LinkContainer>
-                      <LinkContainer to="/orderhistory">
-                        <NavDropdown.Item>Order History</NavDropdown.Item>
-                      </LinkContainer>
-                      <NavDropdown.Divider />
-                      <Link
-                        className="dropdown-item"
-                        to="#signout"
-                        onClick={signoutHandler}
-                      >
-                        Sign Out
-                      </Link>
-                    </NavDropdown>
-                  ) : (
-                    <Link className="nav-link" to="/signin">
-                      Sign In
-                    </Link>
-                  )}
+                  </Link> */}
                   {userInfo && userInfo.isAdmin && (
-                    <NavDropdown title="Admin" id="admin-nav-dropdown">
+                    <NavDropdown title="Quản trị" id="admin-nav-dropdown">
                       <LinkContainer to="/admin/dashboard">
-                        <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                        <NavDropdown.Item>Trang chủ</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/products">
-                        <NavDropdown.Item>Products</NavDropdown.Item>
+                        <NavDropdown.Item>Sản phẩm</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/orders">
-                        <NavDropdown.Item>Orders</NavDropdown.Item>
+                        <NavDropdown.Item>Đơn đặt hàng</NavDropdown.Item>
                       </LinkContainer>
                       <LinkContainer to="/admin/users">
-                        <NavDropdown.Item>Users</NavDropdown.Item>
+                        <NavDropdown.Item>Người dùng</NavDropdown.Item>
                       </LinkContainer>
                     </NavDropdown>
                   )}
@@ -192,15 +192,8 @@ function App() {
               <Route path="/search" element={<SearchScreen />} />
               <Route path="/signin" element={<SigninScreen />} />
               <Route path="/signup" element={<SignupScreen />} />
-              <Route
-                path="/forget-password"
-                element={<ForgetPasswordScreen />}
-              />
-              <Route
-                path="/reset-password/:token"
-                element={<ResetPasswordScreen />}
-              />
-
+              <Route path="/forget-password" element={<ForgetPasswordScreen />} />
+              <Route path="/reset-password/:token" element={<ResetPasswordScreen />} />
               <Route
                 path="/profile"
                 element={
@@ -234,13 +227,10 @@ function App() {
                   </ProtectedRoute>
                 }
               ></Route>
-              <Route
-                path="/shipping"
-                element={<ShippingAddressScreen />}
-              ></Route>
+              <Route path="/shipping" element={<ShippingAddressScreen />}></Route>
               <Route path="/payment" element={<PaymentMethodScreen />}></Route>
               {/* Admin Routes */}
-              <Route  
+              <Route
                 path="/admin/dashboard"
                 element={
                   <AdminRoute>
@@ -293,9 +283,9 @@ function App() {
             </Routes>
           </Container>
         </main>
-        <footer>
+        {/* <footer>
           <div className="text-center">All rights reserved</div>
-        </footer>
+        </footer> */}
       </div>
     </BrowserRouter>
   );

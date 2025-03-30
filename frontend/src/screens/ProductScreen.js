@@ -49,12 +49,11 @@ function ProductScreen() {
   const params = useParams();
   const { slug } = params;
 
-  const [{ loading, error, product, loadingCreateReview }, dispatch] =
-    useReducer(reducer, {
-      product: [],
-      loading: true,
-      error: '',
-    });
+  const [{ loading, error, product, loadingCreateReview }, dispatch] = useReducer(reducer, {
+    product: [],
+    loading: true,
+    error: '',
+  });
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: 'FETCH_REQUEST' });
@@ -125,11 +124,7 @@ function ProductScreen() {
     <div>
       <Row>
         <Col md={6}>
-          <img
-            className="img-large"
-            src={selectedImage || product.image}
-            alt={product.name}
-          ></img>
+          <img className="img-large" src={selectedImage || product.image} alt={product.name}></img>
         </Col>
         <Col md={3}>
           <ListGroup variant="flush">
@@ -137,36 +132,30 @@ function ProductScreen() {
               <Helmet>
                 <title>{product.name}</title>
               </Helmet>
-              <h1>{product.name}</h1>
+              <h1 style={{ fontSize: '20px' }}>{product.name}</h1>
             </ListGroup.Item>
+            {/* <ListGroup.Item>
+              <Rating rating={product.rating} numReviews={product.numReviews}></Rating>
+            </ListGroup.Item> */}
+            {/* <ListGroup.Item>
+              <span className="text-bold">Giá</span> : ${product.price}
+            </ListGroup.Item> */}
             <ListGroup.Item>
-              <Rating
-                rating={product.rating}
-                numReviews={product.numReviews}
-              ></Rating>
+              <span className="text-bold">Mô tả:</span>
+              <p>{product.description}</p>
             </ListGroup.Item>
-            <ListGroup.Item>Pirce : ${product.price}</ListGroup.Item>
             <ListGroup.Item>
               <Row xs={1} md={2} className="g-2">
                 {[product.image, ...product.images].map((x) => (
                   <Col key={x}>
-                    <Card>
-                      <Button
-                        className="thumbnail"
-                        type="button"
-                        variant="light"
-                        onClick={() => setSelectedImage(x)}
-                      >
+                    <Card style={{ objectFit: 'cover' }}>
+                      <Button className="thumbnail" type="button" variant="light" onClick={() => setSelectedImage(x)}>
                         <Card.Img variant="top" src={x} alt="product" />
                       </Button>
                     </Card>
                   </Col>
                 ))}
               </Row>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              Description:
-              <p>{product.description}</p>
             </ListGroup.Item>
           </ListGroup>
         </Col>
@@ -176,44 +165,45 @@ function ProductScreen() {
               <ListGroup variant="flush">
                 <ListGroup.Item>
                   <Row>
-                    <Col>Price:</Col>
-                    <Col>${product.price}</Col>
+                    <Col>Giá:</Col>
+                    <Col style={{ color: '#dd2f2c', fontWeight: 'bold' }}>Liên hệ</Col>
                   </Row>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
-                    <Col>Status:</Col>
+                    <Col>Trạng thái:</Col>
                     <Col>
                       {product.countInStock > 0 ? (
-                        <Badge bg="success">In Stock</Badge>
+                        <Badge bg="success">Còn hàng</Badge>
                       ) : (
-                        <Badge bg="danger">Unavailable</Badge>
+                        <Badge bg="danger">Hết hàng</Badge>
                       )}
                     </Col>
                   </Row>
                 </ListGroup.Item>
 
-                {product.countInStock > 0 && (
+                {/* {product.countInStock > 0 && (
                   <ListGroup.Item>
                     <div className="d-grid">
                       <Button onClick={addToCartHandler} variant="primary">
-                        Add to Cart
+                        Thêm giỏ hàng
                       </Button>
                     </div>
                   </ListGroup.Item>
-                )}
+                )} */}
+                <ListGroup.Item>
+                  <div className="d-grid">
+                    <span style={{ color: '#dd2f2c', fontWeight: 'bold', fontSize: '20px' }}>096.310.2599 (Quí) </span>
+                  </div>
+                </ListGroup.Item>
               </ListGroup>
             </Card.Body>
           </Card>
         </Col>
       </Row>
-      <div className="my-3">
-        <h2 ref={reviewsRef}>Reviews</h2>
-        <div className="mb-3">
-          {product.reviews.length === 0 && (
-            <MessageBox>There is no review</MessageBox>
-          )}
-        </div>
+      {/* <div className="my-3">
+        <h2 ref={reviewsRef}>Đánh giá</h2>
+        <div className="mb-3">{product.reviews.length === 0 && <MessageBox>Không có đánh giá nào</MessageBox>}</div>
         <ListGroup>
           {product.reviews.map((review) => (
             <ListGroup.Item key={review._id}>
@@ -230,11 +220,7 @@ function ProductScreen() {
               <h2>Write a customer review</h2>
               <Form.Group className="mb-3" controlId="rating">
                 <Form.Label>Rating</Form.Label>
-                <Form.Select
-                  aria-label="Rating"
-                  value={rating}
-                  onChange={(e) => setRating(e.target.value)}
-                >
+                <Form.Select aria-label="Rating" value={rating} onChange={(e) => setRating(e.target.value)}>
                   <option value="">Select...</option>
                   <option value="1">1- Poor</option>
                   <option value="2">2- Fair</option>
@@ -243,11 +229,7 @@ function ProductScreen() {
                   <option value="5">5- Excelent</option>
                 </Form.Select>
               </Form.Group>
-              <FloatingLabel
-                controlId="floatingTextarea"
-                label="Comments"
-                className="mb-3"
-              >
+              <FloatingLabel controlId="floatingTextarea" label="Comments" className="mb-3">
                 <Form.Control
                   as="textarea"
                   placeholder="Leave a comment here"
@@ -265,15 +247,11 @@ function ProductScreen() {
             </form>
           ) : (
             <MessageBox>
-              Please{' '}
-              <Link to={`/signin?redirect=/product/${product.slug}`}>
-                Sign In
-              </Link>{' '}
-              to write a review
+              Please <Link to={`/signin?redirect=/product/${product.slug}`}>Sign In</Link> to write a review
             </MessageBox>
           )}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

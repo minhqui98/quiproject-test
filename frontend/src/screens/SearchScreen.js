@@ -82,12 +82,11 @@ export default function SearchScreen() {
   const order = sp.get('order') || 'newest';
   const page = sp.get('page') || 1;
 
-  const [{ loading, error, products, pages, countProducts }, dispatch] =
-    useReducer(reducer, {
-      loading: true,
-      error: '',
-    });
-
+  const [{ loading, error, products, pages, countProducts }, dispatch] = useReducer(reducer, {
+    loading: true,
+    error: '',
+  });
+  // console.log(pages);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -119,16 +118,23 @@ export default function SearchScreen() {
   }, [dispatch]);
 
   const getFilterUrl = (filter, skipPathname) => {
+    // console.log(filter);
     const filterPage = filter.page || page;
     const filterCategory = filter.category || category;
     const filterQuery = filter.query || query;
     const filterRating = filter.rating || rating;
     const filterPrice = filter.price || price;
     const sortOrder = filter.order || order;
+    // console.log(
+    //   `${
+    //     skipPathname ? '' : '/search?'
+    //   }category=${filterCategory}&query=${filterQuery}&price=${filterPrice}&rating=${filterRating}&order=${sortOrder}&page=${filterPage}`
+    // );
     return `${
       skipPathname ? '' : '/search?'
     }category=${filterCategory}&query=${filterQuery}&price=${filterPrice}&rating=${filterRating}&order=${sortOrder}&page=${filterPage}`;
   };
+  // console.log(getFilterUrl);
   return (
     <div>
       <Helmet>
@@ -140,19 +146,13 @@ export default function SearchScreen() {
           <div>
             <ul>
               <li>
-                <Link
-                  className={'all' === category ? 'text-bold' : ''}
-                  to={getFilterUrl({ category: 'all' })}
-                >
+                <Link className={'all' === category ? 'text-bold' : ''} to={getFilterUrl({ category: 'all' })}>
                   Any
                 </Link>
               </li>
               {categories.map((c) => (
                 <li key={c}>
-                  <Link
-                    className={c === category ? 'text-bold' : ''}
-                    to={getFilterUrl({ category: c })}
-                  >
+                  <Link className={c === category ? 'text-bold' : ''} to={getFilterUrl({ category: c })}>
                     {c}
                   </Link>
                 </li>
@@ -163,19 +163,13 @@ export default function SearchScreen() {
             <h3>Price</h3>
             <ul>
               <li>
-                <Link
-                  className={'all' === price ? 'text-bold' : ''}
-                  to={getFilterUrl({ price: 'all' })}
-                >
+                <Link className={'all' === price ? 'text-bold' : ''} to={getFilterUrl({ price: 'all' })}>
                   Any
                 </Link>
               </li>
               {prices.map((p) => (
                 <li key={p.value}>
-                  <Link
-                    to={getFilterUrl({ price: p.value })}
-                    className={p.value === price ? 'text-bold' : ''}
-                  >
+                  <Link to={getFilterUrl({ price: p.value })} className={p.value === price ? 'text-bold' : ''}>
                     {p.name}
                   </Link>
                 </li>
@@ -196,10 +190,7 @@ export default function SearchScreen() {
                 </li>
               ))}
               <li>
-                <Link
-                  to={getFilterUrl({ rating: 'all' })}
-                  className={rating === 'all' ? 'text-bold' : ''}
-                >
+                <Link to={getFilterUrl({ rating: 'all' })} className={rating === 'all' ? 'text-bold' : ''}>
                   <Rating caption={' & up'} rating={0}></Rating>
                 </Link>
               </li>
@@ -221,14 +212,8 @@ export default function SearchScreen() {
                     {category !== 'all' && ' : ' + category}
                     {price !== 'all' && ' : Price ' + price}
                     {rating !== 'all' && ' : Rating ' + rating + ' & up'}
-                    {query !== 'all' ||
-                    category !== 'all' ||
-                    rating !== 'all' ||
-                    price !== 'all' ? (
-                      <Button
-                        variant="light"
-                        onClick={() => navigate('/search')}
-                      >
+                    {query !== 'all' || category !== 'all' || rating !== 'all' || price !== 'all' ? (
+                      <Button variant="light" onClick={() => navigate('/search')}>
                         <i className="fas fa-times-circle"></i>
                       </Button>
                     ) : null}
@@ -249,9 +234,7 @@ export default function SearchScreen() {
                   </select>
                 </Col>
               </Row>
-              {products.length === 0 && (
-                <MessageBox>No Product Found</MessageBox>
-              )}
+              {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
 
               <Row>
                 {products.map((product) => (
@@ -263,21 +246,28 @@ export default function SearchScreen() {
 
               <div>
                 {[...Array(pages).keys()].map((x) => (
-                  <LinkContainer
-                    key={x + 1}
-                    className="mx-1"
-                    to={{
-                      pathname: '/search',
-                      seacrh: getFilterUrl({ page: x + 1 }, true),
-                    }}
-                  >
+                  // console.log(x),
+                  // <LinkContainer
+                  //   key={x + 1}
+                  //   className="mx-1"
+                  //   to={{
+                  //     pathname: '/search',
+                  //     seacrh: getFilterUrl({ page: x + 1 }),
+                  //   }}
+                  //
+                  <>
                     <Button
+                      onClick={() => {
+                        navigate(getFilterUrl({ page: x + 1 }));
+                      }}
                       className={Number(page) === x + 1 ? 'text-bold' : ''}
-                      variant="light"
+                      variant={Number(page) === x + 1 ? 'primary' : 'light'}
                     >
                       {x + 1}
-                    </Button>
-                  </LinkContainer>
+                    </Button>{' '}
+                    &nbsp;
+                  </>
+                  // </LinkContainer>
                 ))}
               </div>
             </>
